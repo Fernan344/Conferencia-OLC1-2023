@@ -87,7 +87,7 @@ case 1:
 
         return new Production(
             new Three.default($$[$0-1].getResult(), errors),
-            [$$[$0-1], $$[$0]],
+            [$$[$0-1], 'EOF'],
             'INIT'
         );
     

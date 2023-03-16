@@ -18,7 +18,7 @@ async function POST (req, res) {
         result.interpretar(ast, table);
       }
     }    
-    res.status(StatusCodes.OK).json({console: ast.getconsola()})
+    res.status(StatusCodes.OK).json({console: ast.getconsola(), ast: production.build()})
   
 }
 

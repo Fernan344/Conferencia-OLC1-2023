@@ -47,7 +47,7 @@
 INIT: INSTRUCCIONES EOF  {
         return new Production(
             new Three.default($1.getResult(), errors),
-            [$1, $2],
+            [$1, 'EOF'],
             'INIT'
         );
     }                                                        
