@@ -14,7 +14,7 @@ export default function Home() {
 
       <main className={styles.main}>
           <div>
-          <Link href="/">Home
+          <Link href="/parse">Home
             <h2>Parse &rarr;</h2>
             <p>
               Ejecuta tu codigo
