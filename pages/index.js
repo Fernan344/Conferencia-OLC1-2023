@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
@@ -13,15 +14,12 @@ export default function Home() {
 
       <main className={styles.main}>
           <div>
-          <a
-            href="/parse"
-            className={styles.card}
-          >
+          <Link href="/">Home
             <h2>Parse &rarr;</h2>
             <p>
               Ejecuta tu codigo
             </p>
-          </a>
+          </Link>
         </div>
       </main>
 
