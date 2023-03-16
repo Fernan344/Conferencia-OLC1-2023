@@ -1,1 +1,3 @@
-npx create-next-app server
+npx create-next-app server .
+
+npm i jison lodash http-status-codes clean-deep axios rimraf
