@@ -1,21 +1,21 @@
 import graphviz from 'graphviz'
 import crypto from 'crypto';
+import moment from 'moment/moment';
 
 export class Production {
     generated;
-    node;
-    counter;
+    node;    
 
     constructor(generated, nodes, productionName) {
         this.generated = generated;
         this.counter = 0;
         this.node = new Node(
-            productionName,
-            (nodes || []).map((node) => {
-                if(node instanceof Production) return node.getNode()
-                return new Node(node)
-            })
+            productionName            
         )
+        this.node.setSons((nodes || []).map((node) => {
+            if(node instanceof Production) return node.getNode();
+            return new Node(node, this.generateHash())
+        }))
     }
     
     getResult() {
@@ -28,8 +28,12 @@ export class Production {
 
     build() {
         const g = graphviz.digraph("G");
-        this.node.build(g, this.counter);
+        this.node.build(g);
         return g.to_dot();
+    }
+
+    generateHash() {
+        return crypto.createHash('sha256').update(JSON.stringify(this)).digest('hex');
     }
 }
 
@@ -37,11 +41,13 @@ export class Node {
     sons;
     label;
     timestamp;
+    productionHash;
 
-    constructor(label, sons = undefined) {
+    constructor(label, productionHash, sons = undefined) {
         this.sons = sons;
         this.label = label;
-        this.timestamp = new Date().toISOString();
+        this.productionHash = productionHash;
+        this.timestamp = moment().format('x');
     }
 
     getSons() {
@@ -50,6 +56,15 @@ export class Node {
 
     getName() {
         return this.label;
+    }
+
+    setSons(sons){
+        this.sons = sons
+    }
+
+    setFather(father){
+        this.father = father;
+        return this;
     }
 
     build(g) {
@@ -64,6 +79,6 @@ export class Node {
     }
 
     generateHash() {
-        return crypto.createHash('sha1').update(JSON.stringify(this)).digest('hex');
+        return crypto.createHash('sha256').update(JSON.stringify(this)).digest('hex');
     }
 }
